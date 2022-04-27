@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <template id="assets_backend" name="vehicle_entry_assests" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/vehicle_entry/static/src/css/vehicle_entry.css"/>
+                <script type="text/javascript" src="/vehicle_entry/static/src/js/vehicle_entry.js"/>
+		 <script type="text/javascript" src="/vehicle_entry/static/src/js/vehicle_exit.js"/>
+		<link rel="stylesheet" href="/vehicle_entry/static/src/less/vehicle_entry.less"/>
+            </xpath>
+     </template>
+
+      <!-- Form and tree views for vehicle entry records -->
+
+   <!--tree of vehicle Entry -->
+    <record id="view_tree_vehicle_entry" model="ir.ui.view">
+        <field name="name">Entry tree</field>
+        <field name="model">vehicle_entry.vehicle_entry</field>
+        <field name="arch" type="xml">
+            <tree string="Enties" create='false'>
+                <field name="check_in"/>
+                <field name="customer"/>
+                <field name="sequence_id"/>
+                <!-- <field name="vehicle_type"/> -->
+                <field name="vehicle_no" context="{'default_name': customer}"/>
+                <field name="driver_id"/>
+                <field name="check_out"/>
+                
+                
+		<field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!--form entry-->
+
+    <record id="view_form_vehicle_entry" model="ir.ui.view">
+        <field name="name">Vehicle Entry</field>
+        <field name="model">vehicle_entry.vehicle_entry</field>
+        <field name="arch" type="xml">
+            <form string="Service" create='false'>
+              <header>
+		<button string="Generate Token" type="object" name="concept_waiting" attrs="{'invisible': [('state','!=','checkin')]}" class="btn-primary"/>
+		<button string="Offload" type="object" name="concept_offload" attrs="{'invisible': [('state','!=','waiting')]}" class="btn-primary"/>
+
+		<button string="Filling" type="object" name="concept_filling" attrs="{'invisible': [('state','!=','offload')]}" class="btn-primary"/>
+        <!-- <button string="Move To Fill" type="object" name="concept_filling" attrs="{'invisible': [('state','!=','offload')]}" class="btn-primary"/> -->
+        
+        <button string="Load" type="object" name="concept_sale" attrs="{'invisible': [('state','!=','filling')]}" class="btn-primary"/>
+        <button string="Done" type="object" name="sale_order_send" attrs="{'invisible': ['|',('bool_field', '=', True),('state','!=','load')]}" class="btn-primary"/>
+        <button string="Check Out" type="object" name="concept_out" attrs="{'invisible': [('state','!=','checkout')]}"/>
+        <field name="state" widget="statusbar" statusbar_visible="checkin"/>
+            <!-- <field name="state" widget="statusbar" statusbar_visible="checkin,waiting,offload,filling,load,checkout"/> -->
+                </header>
+                    <sheet>
+                        <h3><field name="sequence_id"/></h3>
+                            <group name="group_top">
+                                <group name="group_left">
+                                    <field name="customer" domain="[('customer', '=', True)]"/>
+                                    <field name="vehicle_no" context="{'default_customer': customer}" domain="[('customer', '=', customer)]" attrs="{'readonly': [('state','!=','checkin')]}"/>
+                                    <!-- domain="[('customer', '=', customer), _getVehicle]" -->
+                                    <field name="vehicle_type"/>
+                                    <field name="bool_field" invisible='1'/>
+                                </group>
+                                <group name="group_right">
+                                    <field name="check_in"/> <!-- attrs="{'readonly': [('state','!=','checkin')]}"/> -->
+                                    <field name="check_out" attrs="{'invisible': [('state','!=','checkout')]}"/>
+                                    <!-- <field name="driver_name" domain="[('parent_id','=',customer), ('is_a_driver', '=', True),('id','in', customer)]" context="{'default_is_a_driver':1,'default_supplier':0, 'default_customer':0}"/> -->
+                                    <field name="driver_name" domain="['|',('id','=', customer),('parent_id','=',customer), ('is_a_driver', '=', True)]" context="{'default_is_a_driver':1,'default_supplier':0, 'default_customer':0}"/>
+
+                                     <!-- attrs="{'invisible': [('state', '!=', 'checkin')]}" -->
+                                    <!-- '|',('state', '!=', 'checkin'), -->
+                                    <field name="driver_id"/>
+                                    <!-- attrs="{'readonly': [('state','!=','checkin')]}"/> -->
+                                </group>
+                            </group>
+                    <notebook attrs="{'invisible': ['|',('state','=','checkin'),('state','=','waiting')]}">
+                        <page string="Order Line">
+                            <field name="item_ids" >
+                                <tree string="Sales Order Lines" editable="True">
+                                    <field name="product_id"/>
+                                    <field name="empty_jar"/>
+                                    <field name="returned_jar"/>
+                                    <field name="damaged_jar"/>
+                                    <!-- <field name="filled_jar"/> -->
+                                    <!-- <field name="labels_consumed"/> -->
+                                    <field name="sold_jar"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_search_customer" model="ir.ui.view">
+            <field name="name">Customer Search</field>
+            <field name="model">vehicle.info</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="customer"/>
+                    <filter name="filters_customer" string="Name" context="{'Filters':'customer'}"/>
+                    <filter name="group_customer" string="Customer" context="{'group_by':'customer'}"/>
+                    <separator/>
+                    <filter string="By Customer" name="filter_customer" domain="[('customer','=',1)]"/>
+                </search>
+            </field>
+    </record>
+
+    
+    
+    <!-- <field name="search_customer" ref="vehicle_entry.view_search_customer"/> -->
+
+
+
+
+
+
+
+
+   <!-- actions -->
+
+    <record id="vehicle_entry_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Entry</field>
+        <field name="res_model">vehicle_entry.vehicle_entry</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_vehicle_in_process":1}</field>
+        <!-- <field name="search_view_id" ref="hr_attendance_view_filter" /> -->
+        <field name="help" type="html">
+            <p>The attendance records of your employees will be displayed here.</p>
+            <p>Please make sure you're using the correct filter if you expected to see any.</p>
+        </field>
+    </record>
+
+
+    <record id="vehicle_info_action" model="ir.actions.act_window">
+        <field name="name">Vehicle Info</field>
+        <field name="res_model">vehicle.info</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="context">{"search_default_today":1}</field> -->
+        <!-- <field name="search_view_id" ref="hr_attendance_view_filter" /> -->
+        <!-- <field name="help" type="html">
+            <p>The attendance records of your employees will be displayed here.</p>
+            <p>Please make sure you're using the correct filter if you expected to see any.</p>
+        </field> -->
+    </record>
+
+    <record id="vehicle_entry_action_enter" model="ir.actions.client">
+        <field name="name">Entry</field>
+        <field name="tag">vehicle_entry_enter</field>
+        <field name="target">main</field>
+    </record>
+
+
+   <record id="vehicle_entry_action_exit" model="ir.actions.client">
+        <field name="name">Exit</field>
+        <field name="tag">vehicle_entry_exit</field>
+        <!-- <field name="target">main</field> -->
+    </record>
+
+    <record id="vehicle_entry_action_greeting_message" model="ir.actions.client">
+        <field name="name">Message</field>
+        <field name="tag">vehicle_entry_greeting_message</field>
+    </record>
+
+
+
+    <record id="view_vehicle_info_form" model="ir.ui.view">
+            <field name="name">vehicle_info_form</field>
+            <field name="model">vehicle.info</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>                    
+                    <sheet>
+                        <h1>Vehicle Information</h1>
+                            <!-- <field name="name" readonly="1"/> -->
+                        <group class="well">
+                            <group>
+                                <field name="customer"/>
+                                <field name="vh_zone"/>
+                                <field name="vh_lot"/>
+                                <field name="vh_category"/>
+                                <field name="number"/>
+                                <field style="text-transform: uppercase" name="vehicle_number"/>
+
+                                <field name="vehicle_type"/>
+                                <field name="remarks"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <!--tree of vehicle info -->
+        <record id="view_tree_vehicle_info" model="ir.ui.view">
+            <field name="name">Vehicle Info</field>
+            <field name="model">vehicle.info</field>
+            <field name="arch" type="xml">
+                <tree string="Vehicle Info">
+                    <field name="customer"/>
+                    <field name="vehicle_number"/>
+                    <field name="vehicle_type"/>
+                    <field name="remarks"/>
+                </tree>
+            </field>
+        </record>
+
+    <!-- <record id="hr_attendance_action_greeting_message" model="ir.actions.client"> -->
+    <!--     <field name="name">Message</field> -->
+    <!--     <field name="tag">hr_attendance_greeting_message</field> -->
+    <!-- </record> -->
+
+      <!-- Menus -->
+
+        <menuitem id="menu_vehicle_entry_root" name="Vehicle Entry" sequence="90"/>
+
+        
+
+
+        <menuitem id="menu_vehicle_entry"
+                name="Vehicle Entry" 
+                parent="menu_vehicle_entry_root"
+                sequence="10"
+                action="vehicle_entry_action_enter"/>
+        <menuitem id="menu_vehicle_entry_details"
+                name="Vehicle Entry Details"
+                parent="menu_vehicle_entry_root"
+                sequence="10"
+                action="vehicle_entry_action"/>
+        <menuitem id="menu_vehicle_info"
+                name="Vehicle Info"
+                parent="menu_vehicle_entry_root"
+                sequence="10"
+                action="vehicle_info_action"/>
+
+	<!-- Filter In Progress Vehicles tree -->
+        <record id="vehicle_entry_tree_search" model="ir.ui.view">
+            <field name="name">Vehicle Entry</field>
+            <field name="model">vehicle_entry.vehicle_entry</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="In Process" name="vehicle_in_process" domain="[('state', '!=', 'checkout')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- <record id="action_mail_client" model="ir.actions.client"> -->
+        <!--     <field name="name">Mail client</field> -->
+        <!--     <field name="tag">mailclient_homepage</field> -->
+        <!--     <field name="target">main</field> -->
+        <!-- </record> -->
+
+        <!-- <menuitem id="mail_client_menu" -->
+        <!--         web_icon="mail_client,static/description/icon.png" -->
+        <!--         name="Mail" -->
+        <!--         action="action_mail_client" -->
+        <!--         groups="mail_client.group_mailpile_user"/> -->
+</odoo>

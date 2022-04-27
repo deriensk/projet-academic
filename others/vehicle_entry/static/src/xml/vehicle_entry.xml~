@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="VechicleEntryTemplate">
+        <div class="mail_client_home_page">
+            <iframe sandbox="allow-same-origin allow-scripts allow-forms" src="http://124.41.241.93:33411" style="height: 100%;width: 100%;" frameborder="0"></iframe>
+        </div>
+    </t>
+</templates>

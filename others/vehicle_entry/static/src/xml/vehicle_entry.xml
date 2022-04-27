@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+  <t t-name="VechicleEntryTemplate">
+
+        <div class="o_vehicle_entry_mode_container">
+            <div class="o_vehicle_entry_kiosk_mode">
+               <h1>Welcome</h1>
+                 <h2>Click to check in</h2>
+                  <i class="fa fa-sign-in btn-primary o_vehicle_entry_sign_in_out_icon"/>
+            </div>
+        </div>
+        <!-- <div class="mail_client_home_page"> -->
+        <!--     <iframe sandbox="allow-same-origin allow-scripts allow-forms" src="http://124.41.241.93:33411" style="height: 100%;width: 100%;" frameborder="0"></iframe> -->
+        <!-- </div> -->
+      </t>
+
+
+       <t t-name="VechicleExitTemplate">
+
+        <div class="o_vehicle_entry_mode_container">
+            <div class="o_vehicle_entry_kiosk_mode">
+               <h1>Have a nice time</h1>
+                 <h2>Click to check out</h2>
+                  <i class="fa fa-sign-in btn-primary o_vehicle_entry_sign_in_out_icon"/>
+            </div>
+        </div>
+        <!-- <div class="mail_client_home_page"> -->
+        <!--     <iframe sandbox="allow-same-origin allow-scripts allow-forms" src="http://124.41.241.93:33411" style="height: 100%;width: 100%;" frameborder="0"></iframe> -->
+        <!-- </div> -->
+    </t>
+
+
+    <!-- <t t-name="VehicleExitMessage">
+        <div class="o_vehicle_entry_message_container">
+            <div class="o_vehicle_entry_message">
+                <t>
+                        <h1 class="o_vehicle_entry_validation">
+                            Checked out at
+                        </h1>
+                        <h2 class="o_vehicle_entry_message_message">
+                            Goodbye
+                            <br/>
+                        </h2>
+                        <h3 class="o_vehicle_entry_random_message"></h3>
+                        <h2 class="o_vehicle_entry_warning_message"></h2>
+                        
+                    </t>
+                   
+                <button class="o_vehicle_entry_button_dismiss btn btn-primary btn-sm">ok</button>
+            </div>
+        </div>
+    </t> -->
+</templates>

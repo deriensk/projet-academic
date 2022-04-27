@@ -1,0 +1,37 @@
+<odoo>
+  <data>
+
+    <record id="view_contacts_form_add_page" model="ir.ui.view">
+      <field name="name">Add Notebook</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+
+        <xpath expr="//field[@name='website']" position="before">
+          <field name="driver_license"/>
+        </xpath>
+        
+        <xpath expr="//page[3]" position='after'>
+            <page string='Vehicle List'>
+              <field name="vehicle_list">
+                <tree editable="true">
+                  <field name="vh_zone"/>
+                  <field name="vh_lot"/>
+                  <field name="vh_category"/>
+                  <field name="number"/>
+                  <field style="text-transform: uppercase" name="vehicle_number"/>
+                  <field name="vehicle_type"/>
+                </tree>  
+              </field>
+            </page>
+          </xpath>
+ 	<xpath expr='/form/sheet/notebook/page[3]/group/group[2]' position='after'>  
+                    <group string="Driver" name="driver">
+                        <field name="is_a_driver"/>
+                    </group> 
+         </xpath>
+    
+      </field>
+    </record>   
+  </data>
+</odoo>

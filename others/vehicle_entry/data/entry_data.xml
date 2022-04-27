@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <!--For the auto naming the forms or records-->
+    <data noupdate="1">
+        <record id="sequence_vehicle_entry" model="ir.sequence">
+            <field name="name">Vehicle Entry</field>
+            <field name="code">vehicle_entry.vehicle_entry</field>
+            <field name="prefix">TOK/2018/</field>
+            <field name="padding">5</field>
+        </record>
+        <!--<record id="sequence_se_eng" model="ir.sequence">-->
+            <!--<field name="name">Engagement Reference</field>-->
+            <!--<field name="code">se.engagement</field>-->
+            <!--<field name="prefix">ENG</field>-->
+            <!--<field name="padding">3</field>-->
+        <!--</record>-->
+    </data>
+</odoo>

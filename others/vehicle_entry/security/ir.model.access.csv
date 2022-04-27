@@ -1,0 +1,20 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_vehicle_info,vehicle.info,model_vehicle_info,,1,0,0,0
+access_vehicle_info_group_manager,Vehicle Info Manager,model_vehicle_info,vehicle_entry.group_manager,1,1,1,1
+access_vehicle_info_group_user,Vehicle Info User,model_vehicle_info,vehicle_entry.group_user,1,1,1,0
+
+access_vehicle_type,vehicle.type,model_vehicle_type,,1,0,0,0
+access_vehicle_type_group_manager,Vehicle Type Manager,model_vehicle_type,vehicle_entry.group_manager,1,1,1,1
+access_vehicle_type_group_user,Vehicle Type User,model_vehicle_type,vehicle_entry.group_user,1,1,1,0
+
+access_jar_data_line,jar.data.line,model_jar_data_line,,1,0,0,0
+access_jar_data_line_group_manager,Jar Data Manager,model_jar_data_line,vehicle_entry.group_manager,1,1,1,1
+access_jar_data_line_group_user,Jar Data User,model_jar_data_line,vehicle_entry.group_user,1,1,1,0
+
+access_vehicle_entry_vehicle_entry,vehicle_entry.vehicle_entry,model_vehicle_entry_vehicle_entry,,1,0,0,0
+access_vehicle_entry_vehicle_entry_group_manager,Vehicle Entry Manager,model_vehicle_entry_vehicle_entry,vehicle_entry.group_manager,1,1,1,1
+access_vehicle_entry_vehicle_entry_group_user,Vehicle Entry User,model_vehicle_entry_vehicle_entry,vehicle_entry.group_user,1,1,1,
+
+access_vehicle_model,vehicle.model,model_vehicle_model,,1,0,0,0
+access_vehicle_model_group_manager,Vehicle Model Manager,model_vehicle_model,vehicle_entry.group_manager,1,1,1,1
+access_vehicle_model_group_user,Vehicle Model User,model_vehicle_model,vehicle_entry.group_user,1,1,1,0

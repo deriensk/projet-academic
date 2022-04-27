@@ -1,0 +1,87 @@
+<odoo>
+  <data>
+
+    <!-- <record id="view_stock_form_add_button" model="ir.ui.view">
+      <field name="name">Removing Sale Order lines</field>
+      <field name="model">sale.order</field>
+      <field name="inherit_id" ref="sale.view_order_form" />
+      <field name="arch" type="xml"> -->
+      
+        <!-- <button name="do_new_transfer" position="before">
+          <button name="button_quality_alert" 
+                  type="action" 
+                  string="QUALITY ALERT"/>
+
+          <button name="%(action_quality_check_wizard)d" 
+                  type="action" 
+                  string="QUALITY CHECK" 
+                  class="btn-primary"/>
+        </button>   -->
+
+      <!-- </field>
+  </record> -->
+
+
+
+
+
+
+
+
+    <!-- explicit list view definition -->
+    <!--
+    <record model="ir.ui.view" id="sales_aqua_ext.list">
+      <field name="name">sales_aqua_ext list</field>
+      <field name="model">sales_aqua_ext.sales_aqua_ext</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="value"/>
+          <field name="value2"/>
+        </tree>
+      </field>
+    </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+    <record model="ir.actions.act_window" id="sales_aqua_ext.action_window">
+      <field name="name">sales_aqua_ext window</field>
+      <field name="res_model">sales_aqua_ext.sales_aqua_ext</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="sales_aqua_ext.action_server">
+      <field name="name">sales_aqua_ext server</field>
+      <field name="model_id" ref="model_sales_aqua_ext_sales_aqua_ext"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+    <menuitem name="sales_aqua_ext" id="sales_aqua_ext.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+    <menuitem name="Menu 1" id="sales_aqua_ext.menu_1" parent="sales_aqua_ext.menu_root"/>
+    <menuitem name="Menu 2" id="sales_aqua_ext.menu_2" parent="sales_aqua_ext.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+    <menuitem name="List" id="sales_aqua_ext.menu_1_list" parent="sales_aqua_ext.menu_1"
+              action="sales_aqua_ext.action_window"/>
+    <menuitem name="Server to list" id="sales_aqua_ext" parent="sales_aqua_ext.menu_2"
+              action="sales_aqua_ext.action_server"/>
+    -->
+  </data>
+</odoo>

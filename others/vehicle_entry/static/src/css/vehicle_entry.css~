@@ -1,0 +1,4 @@
+.mail_client_home_page {
+	width: 100%!Important;
+	height: 100%!Important;
+}

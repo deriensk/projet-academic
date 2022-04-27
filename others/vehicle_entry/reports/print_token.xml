@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+<data>
+
+    <report id="action_print_token_report" 
+            string="Token" 
+            model="vehicle_entry.vehicle_entry" 
+            report_type="qweb-pdf" 
+            name="vehicle_entry.vehicle_entry_token_print_template"
+            paperformat="vehicle_entry.paperformat_euro_landscape"/>
+    
+    <template id="vehicle_entry_token_print_template">
+
+        <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+        <t t-call="web.internal_layout">
+
+            <div class="page">
+                <h3 align="center" font="bold">
+                    <b>Token Number<br/><span t-field="o.sequence_id"/></b>
+                </h3>
+                <br/>
+
+                <br/><t t-foreach="o.vehicle_no" t-as="p">
+                    <b>Customer:</b>
+                    <span t-field="p.customer"/>
+                </t>  
+
+                <div class="row">
+                <div class="col-xs-6"><b>Driver Name: </b>
+                  <span t-field="o.driver_name"/><br/></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6"><b>Driver ID: </b>
+                    <span t-field="o.driver_id"/><br/></div>
+                </div>
+                
+                <b>Arrival Datetime:</b>
+                <span t-field="o.check_in"/>
+
+                <br/><b>Vehicle number:</b>
+                <span t-field="o.vehicle_no"/>
+
+                  
+            </div>
+        </t>
+        </t>
+        </t>
+
+    </template>
+
+</data>
+
+</odoo>
+
+<!-- 
+Paper format - A7 vertical alignment
+Should include token number
+Arrival time date - automatically populate date
+Customer name
+Vehicle number -->

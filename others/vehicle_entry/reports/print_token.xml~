@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+
+<data>
+
+    <report id="action_checklist_report" string="Checklist" model="checklist.check" report_type="qweb-pdf" name="checklist.checklist_report_template"/>
+    <template id="checklist_report_template">
+
+        <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+        <t t-call="report.external_layout">
+
+            <div class="page">
+                <h3 align="center" font="bold"><b>Checklist Name: <span t-field="o.Name"/></b></h3>
+                <br/>
+                <div class="row">
+                <div class="col-xs-6"><b>Created Date </b>  <span t-field="o.date_created"/><br/></div>
+                <div class="col-xs-6"><b>Created By: </b>  <span t-field="o.created_by"/></div>
+                <div class="col-xs-6"><b>Department: </b>  <span t-field="o.department"/></div>
+                
+                </div>
+
+
+
+
+                <hr/>
+
+
+
+                <table width="100%" border="2" font-weight="bold">
+
+                            <tr style="border: 1px solid black">
+                                <th style="border: 1px solid black;text-align: center;"><b>S.N</b></th>
+                                <th style="border: 1px solid black;text-align: center;"><b>Narratives</b></th>
+                                <th style="border: 1px solid black;text-align: center;"><b>Checklist</b></th>
+
+
+
+                            </tr>
+                            <t t-foreach="docs.check_id" t-as="p">
+                            <tr style="border: 1px solid black">
+
+                                    <td style="border: 1px solid black;padding: 2px 2px;"><span t-field="p.s_n"/></td>
+                                    <td style="border: 1px solid black;padding: 2px 2px;"><span t-field="p.steps"/></td>
+                                    <td style="border: 1px solid black;padding: 2px 2px;"><span t-field="p.check"/></td>
+
+                            </tr>
+                            </t>
+
+                        </table>
+
+
+
+            </div>
+
+        </t>
+
+        </t>
+
+        </t>
+
+    </template>
+
+</data>
+
+</openerp>

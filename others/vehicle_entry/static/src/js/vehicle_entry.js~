@@ -1,0 +1,50 @@
+odoo.define('vehicle_entry.vehicle_entry_enter', function (require) {
+    var core = require('web.core');
+    var Model = require('web.Model');
+    var Widget = require('web.Widget');
+    var _t = core._t;
+    var QWeb = core.qweb;  
+    var VehicleRecord = Widget.extend({
+	events: {
+	    template: "VehicleEntryTemplate",
+	    "click .o_vehicle_entry_sign_in_out_icon": function() {
+		this.$('.o_vehicle_entry_sign_in_out_icon').attr("disabled", "disabled");
+		this.on_click();
+	    },
+	},
+
+	start: function () {
+            var self = this;
+
+	    self.$el.html(QWeb.render("VechicleEntryTemplate", {widget: self}));
+
+	    return this._super.apply(this, arguments);
+	},
+	
+	// template: "VehicleEntryTemplate",
+	on_click: function() {
+
+         //     console.log: ('Test')
+
+	    this.$(".o_vehicle_entry_sign_in_out_icon").click(function (event) {
+	    	event.stopPropagation();
+	    	var action = {
+	    	    type: 'ir.actions.act_window',
+	    	    res_model: 'vehicle_entry.vehicle_entry',
+	    	    view_mode: 'form',
+	    	    view_type: 'form',
+	    	    action_id: 'vehicle_entry.vehicle_entry_action',
+	    	    views: [['590', 'form']],
+	    	    target: 'new',
+	    	    context: { },
+	    	};
+	    });
+	    
+	},
+        
+	});
+    
+    core.action_registry.add('vehicle_entry_enter', VehicleRecord);
+
+    return VehicleRecord;
+});

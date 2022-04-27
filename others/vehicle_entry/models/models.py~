@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api, _
+
+class vehicle_entry(models.Model):
+    _name = 'vehicle_entry.vehicle_entry'
+
+    sequence_id = fields.Char(
+        'Sequence ID', copy=False, readonly=True, default=lambda x: _('New'))
+
+    check_in = fields.Date("Check In")
+    check_out = fields.Date("Check Out")
+    
+    vehicle_no = fields.Char('Vehicle No')
+    driver_id = fields.Char('Identity Number')
+    state = fields.Selection([('checkin', 'Check In'),
+                              ('load', 'Loading'),
+                              ('checkout', 'Check Out'),], readonly=True,
+                             default='checkin')
+
+# Create unique id of every entry record
+    @api.model
+    def create(self, vals):
+        if vals.get('sequence_id', _('New')) == _('New'):
+            vals['sequence_id'] = self.env['ir.sequence'].next_by_code('vehicle_entry.vehicle_entry') or _('New')
+        return super(vehicle_entry, self).create(vals)
+
+
+# Workflow
+    
+    @api.multi
+    def concept_checkin(self):
+        self.ensure_one()
+        self.write({'state': 'checkin', })
+
+    @api.multi
+    def concept_loading(self):
+        self.ensure_one()
+        self.write({'state': 'load', })
+
+    @api.multi
+    def concept_checkout(self):
+        self.ensure_one()
+        self.write({'state': 'checkout'})
+
+
